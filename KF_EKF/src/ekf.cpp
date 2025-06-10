@@ -27,6 +27,10 @@ void EKF::setH(const Eigen::MatrixXd& h) {
   H_ = h;
 }
 
+void EKF::setB(const Eigen::MatrixXd& b) {
+  B_ = b;
+  use_control_ = true;
+}
 
 void EKF::predict(const Eigen::VectorXd& u) {
   if (use_control_) {
@@ -49,6 +53,5 @@ void EKF::update(const Eigen::VectorXd& z) {
 Eigen::MatrixXd EKF::computeKalmanGain() {
   return P_ * H_.transpose() * (H_ * P_ * H_.transpose() + R_).inverse();
 }
-
 
 } // namespace filter
